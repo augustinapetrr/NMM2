@@ -14,13 +14,13 @@ def u_precise_func(x, t):
     return complex(1, t) * math.cos(math.pi / 2 + math.pi * x)
 
 def u_modulus_pwr(x, t):
-    return i * constants.d * (1 + t**2) * complex(1, t) * (math.sin(math.pi * x))**3
+    return (1 + t**2) * (math.sin(math.pi * x))**2
 
 def f_func(x, t):
     first = (-1) * i * math.sin(math.pi * x)
     second = (-1) * complex(constants.a**2, 1) * math.pi**2 * complex(1, t) * math.sin(math.pi * x)
     third = i * constants.c * complex(1, t) * math.sin(math.pi * x)
-    fourth = u_modulus_pwr(x, t)
+    fourth = (-1) * i * constants.d * u_modulus_pwr(x, t) * u_precise_func(x, t)
     f = first + second + third + fourth
     return f
 
@@ -45,12 +45,12 @@ def test_1(x, t):
     f_js = f_func(x, t + constants.tau)
 
     first = (u_js - u_j) / constants.tau
-    second_a = (u_js_pv - 2 * u_js + u_js_mv) / constants.h**2
-    second_b = (u_j_pv - 2 * u_j + u_j_mv) / constants.h**2
-    second = (-1) * (constants.a**2 + i) * 0.5 * (second_a + second_b)
-    third = i * constants.c * (u_js + u_j) * 0.5
-    fourth = i * constants.d * (u_js_kv * u_js + u_j_kv * u_j) * 0.5
-    fifth = (f_js + f_j) * 0.5
+    second_a = (u_js_pv - (2 * u_js) + u_js_mv) / constants.h**2
+    second_b = (u_j_pv - (2 * u_j) + u_j_mv) / constants.h**2
+    second = (-1) * complex(constants.a**2, 1) * 0.5 * (second_a + second_b)
+    third = (-1) * i * constants.c * (u_js + u_j) * 0.5
+    fourth = (-1) * i * constants.d * (u_js_kv * u_js + u_j_kv * u_j) * 0.5
+    fifth = (-1) * (f_js + f_j) * 0.5
     residual = abs(first + second + third + fourth + fifth)
 
     return residual
