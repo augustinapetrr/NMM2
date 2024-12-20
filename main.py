@@ -12,3 +12,5 @@ t = 1.58
 
 tests.first_test(x, t)
 tests.second_test(x, t)
+tests.third_test()
+tests.global_test(t)
