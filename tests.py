@@ -94,14 +94,14 @@ def global_test(t):
     max_delta_3 = functions.full_algorithm(t)
     print("Calculation error: ", max_delta_3)
     print("Calculation error ratio: ", max_delta_2/max_delta_3)
-    constants.n = constants.n * 10
+    '''constants.n = constants.n * 10
     constants.tau = constants.tau / 10
     constants.h = constants.h / 10
     print("Changed values: tau = ", constants.tau, ", h = ", constants.h)
     max_delta_4 = functions.full_algorithm(t)
     print("Calculation error: ", max_delta_4)
-    print("Calculation error ratio: ", max_delta_3/max_delta_4)
-    
+    print("Calculation error ratio: ", max_delta_3/max_delta_4)'''
+
     constants.h = constants.h * 1000
     constants.tau = constants.tau * 1000
     constants.n = constants.n / 1000
