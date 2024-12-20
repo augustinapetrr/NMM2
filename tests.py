@@ -8,7 +8,7 @@ def print_test_help(residual_1, residual_2):
 def first_test(x, t):
     print("FIRST TEST")
     residual = functions.test_1(x, t)
-    print("Initial values: tau = ", constants.tau, ", h = ", constants.h, "\nResidual = ", residual, "\n")
+    print("Initial values: tau = ", constants.tau, ", h = ", constants.h, "\nResidual = ", residual)
     constants.n = constants.n * 10
     constants.h = constants.h / 10
     constants.tau = constants.tau / 10
@@ -35,7 +35,7 @@ def first_test(x, t):
 def second_test(x, t):
     print("\n\nSECOND TEST")
     residual = functions.test_2(x, t)
-    print("Initial values: tau = ", constants.tau, ", h = ", constants.h, "\nResidual = ", residual, "\n")
+    print("Initial values: tau = ", constants.tau, ", h = ", constants.h, "\nResidual = ", residual)
     constants.n = constants.n * 10
     constants.h = constants.h / 10
     constants.tau = constants.tau / 10
@@ -87,3 +87,21 @@ def global_test(t):
     max_delta_2 = functions.full_algorithm(t)
     print("Calculation error: ", max_delta_2)
     print("Calculation error ratio: ", max_delta/max_delta_2)
+    constants.n = constants.n * 10
+    constants.tau = constants.tau / 10
+    constants.h = constants.h / 10
+    print("Changed values: tau = ", constants.tau, ", h = ", constants.h)
+    max_delta_3 = functions.full_algorithm(t)
+    print("Calculation error: ", max_delta_3)
+    print("Calculation error ratio: ", max_delta_2/max_delta_3)
+    constants.n = constants.n * 10
+    constants.tau = constants.tau / 10
+    constants.h = constants.h / 10
+    print("Changed values: tau = ", constants.tau, ", h = ", constants.h)
+    max_delta_4 = functions.full_algorithm(t)
+    print("Calculation error: ", max_delta_4)
+    print("Calculation error ratio: ", max_delta_3/max_delta_4)
+    
+    constants.h = constants.h * 1000
+    constants.tau = constants.tau * 1000
+    constants.n = constants.n / 1000

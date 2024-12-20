@@ -84,15 +84,15 @@ def test_2(x, t):
 def alpha_array():
     C_function = C_func()
     a_array = [0, 0] # alpha_0 neegzistuoja; dėl I kr.są. alpha_1 = 0 
-    for i in range(2, int(constants.n)):
-        a_array.append(1 / (C_function - a_array[i - 1]))
+    for k in range(2, int(constants.n)):
+        a_array.append(1 / (C_function - a_array[k - 1]))
     a_array.append(0)  # Alpha_N = 0 del I K.S
     return a_array
 
 def max_difference(u_new, u_old):
     max_diff = 0
-    for i in range(0, len(u_new)):
-        difference = abs(u_old[i] - u_new[i])
+    for k in range(0, len(u_new)):
+        difference = abs(u_old[k] - u_new[k])
         if max_diff < difference:
             max_diff = difference
     return max_diff
@@ -103,9 +103,9 @@ def thomas_algorithm(F_function):
     beta_array = [0, 0]  # beta_0 - neegzistuoja; dėl I kr.są. beta_1 = 0
     u_new = [complex(0, 0) for i in range(int(constants.n) + 1)]
 
-    for i in range(2, int(constants.n) + 1):
-        top = F_function[i - 1] + beta_array[i - 1]
-        bottom = C_function - a_array[i - 1]
+    for k in range(2, int(constants.n) + 1):
+        top = F_function[k - 1] + beta_array[k - 1]
+        bottom = C_function - a_array[k - 1]
         beta_array.append(top / bottom)
 
     for k in reversed(range(1, int(constants.n))):
@@ -122,12 +122,12 @@ def fill_u_list(t):
 
 def F_function_list(t_current, u, u_js):
     F_function_array = [0j]
-    for i in range(1, int(constants.n)):
-        u_js_abs_sqr = u_js[i].real**2 + u_js[i].imag**2
-        u_abs = u[i].real**2 + u[i].imag**2
-        f_j = f_func(constants.h * i, t_current)
-        f_js = f_func(constants.h * i, t_current + constants.tau)
-        F_function_array.append(F_func(f_j, f_js, u[i], u_js[i], u_abs, u_js_abs_sqr, u[i + 1], u[i - 1]))
+    for k in range(1, int(constants.n)):
+        u_js_abs_sqr = u_js[k].real**2 + u_js[k].imag**2
+        u_abs = u[k].real**2 + u[k].imag**2
+        f_j = f_func(constants.h * k, t_current)
+        f_js = f_func(constants.h * k, t_current + constants.tau)
+        F_function_array.append(F_func(f_j, f_js, u[k], u_js[k], u_abs, u_js_abs_sqr, u[k + 1], u[k - 1]))
     return F_function_array
 
 def u_new_function(u_js, F_function):
@@ -148,7 +148,6 @@ def full_algorithm(t_total):
     u = fill_u_list(t)
     max_difference_array = []
     u_js = list(u)
-
     while t < t_total:
         F_function = F_function_list(t, u, u_js)
         u_new = u_new_function(u_js, F_function)
@@ -156,5 +155,4 @@ def full_algorithm(t_total):
         u = fill_u_list(t)
         max_difference_array.append(max_difference(u_new, u))
         u_js = list(u_new)
-
     return max(max_difference_array)
