@@ -10,6 +10,8 @@ import constants
 
 i = complex(0, 1)
 
+# T1
+
 def u_precise_func(x, t):
     return complex(1, t) * math.cos(math.pi / 2 + math.pi * x)
 
@@ -24,11 +26,11 @@ def f_func(x, t):
     f = first + second + third + fourth
     return f
 
-def fill_u_list(t):
+"""def fill_u_list(t):
     u = []
     for j in range(0, constants.n + 1):
         u.append(u_precise_func(t, constants.h * j))
-    return u
+    return u"""
 
 def test_1(x, t):
     u_j = u_precise_func(x, t)
@@ -54,3 +56,37 @@ def test_1(x, t):
     residual = abs(first + second + third + fourth + fifth)
 
     return residual
+
+# T2
+
+def C_func():
+    return 2 + (2 * constants.h**2 / (complex(constants.a**2, 1) * constants.tau))
+
+def F_func(f_j, f_js, u_j, u_js, u_j_kv, u_js_kv, u_j_pv, u_j_mv):
+    first = u_j_pv - 2 * u_j + u_j_mv
+    h_a = constants.h**2 / complex(constants.a**2, 1)
+    second = 2 / constants.tau * u_j
+    third = complex(0, constants.c) * (u_js + u_j)
+    fourth = complex(0, constants.d) * (u_js_kv * u_js + u_j_kv * u_j)
+    fifth = f_j + f_js
+
+    return first + h_a * (second + third + fourth + fifth)
+
+def test_2(x, t):
+    u_j = u_precise_func(x, t)
+    u_j_pv = u_precise_func(x + constants.h, t)
+    u_j_mv = u_precise_func(x - constants.h, t)
+    u_j_kv = u_modulus_pwr(x, t)
+
+    u_js = u_precise_func(x, t + constants.tau)
+    u_js_pv = u_precise_func(x + constants.h, t + constants.tau)
+    u_js_mv = u_precise_func(x - constants.h, t + constants.tau)
+    u_js_kv = u_modulus_pwr(x, t + constants.tau)
+
+    f_j = f_func(x, t)
+    f_js = f_func(x, t + constants.tau)
+
+    C_function = C_func()
+    F_function = F_func(f_j, f_js, u_j, u_js, u_j_kv, u_js_kv, u_j_pv, u_j_mv)
+
+    return abs(u_js_pv - (C_function * u_js) + u_js_mv + F_function)

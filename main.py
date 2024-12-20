@@ -11,3 +11,4 @@ x = 0.79  # 0 < x < 1
 t = 1.58 
 
 tests.first_test(x, t)
+tests.second_test(x, t)

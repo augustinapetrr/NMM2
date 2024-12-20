@@ -1,5 +1,5 @@
 # Constants
-a = 0.75
+a = -0.75
 c = 4.41
 d = 9.4
 tau = 0.1 # žingsnis laike
